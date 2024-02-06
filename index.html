@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>array object </title>
+</head>
+
+<body>
+    <div>First Name : <input type="text" id="fname"></div>
+    <div>Last Name : <input type="text" id="lname"></div>
+    <div>Mobile Number : <input type="text" id="number"></div>
+    <div>City : <input type="text" id="city"></div>
+    <button type="button" onclick="add()">Add Record</button>
+    <button type="button" onclick="create_table()">Create Table</button>
+    <input type="text" id="search_city" placeholder="Search..">
+    <button type="button" onclick="search()">Search City</button></span>
+    <div id="createdtbl"></div>
+    <div id="citys"></div>
+
+
+    <script>
+        var arr = [];
+        function search() {
+            arr.filter(function (item) {
+                if (item.city == document.getElementById("search_city").value) {
+                    // alert("Name :"+item.FirstName+" city "+item.city);
+                    document.getElementById("citys").innerHTML += "Name :" + item.FirstName + " city :" + item.city + "<br>";
+                }
+            })
+        }
+        function add() {
+            let obj = {
+                FirstName: document.getElementById("fname").value,
+                LastName: document.getElementById("lname").value,
+                MobileNumber: document.getElementById("number").value,
+                city: document.getElementById("city").value
+            }
+            arr.push(obj);
+            console.log(arr)
+        }
+        function create_table() {
+            table1 = `
+            <table border='1'><tr>
+                <td>First Name</td>
+                <td>Last Number</td>
+                <td>Mobile Number</td>
+                <td>City</td>
+                </tr>`;
+            for (let i = 0; i < arr.length; i++) {
+                table1 += `<tr>
+                <td>${arr[i].FirstName}</td>
+                <td>${arr[i].LastName}</td>
+                <td>${arr[i].MobileNumber}</td>
+                <td>${arr[i].city}</td>
+                </tr>`;
+            }
+            table1 += `</table>`;
+            document.getElementById("createdtbl").innerHTML += table1;
+        }
+    </script>
+
+</body>
+
+</html>
