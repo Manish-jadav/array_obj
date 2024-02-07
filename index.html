@@ -13,52 +13,108 @@
     <div>Mobile Number : <input type="text" id="number"></div>
     <div>City : <input type="text" id="city"></div>
     <button type="button" onclick="add()">Add Record</button>
-    <button type="button" onclick="create_table()">Create Table</button>
+    <!-- <button type="button" onclick="create_table()">Create Table</button> -->
     <input type="text" id="search_city" placeholder="Search..">
     <button type="button" onclick="search()">Search City</button></span>
+    <br>
     <div id="createdtbl"></div>
     <div id="citys"></div>
 
 
     <script>
         var arr = [];
+        var table1 = ``;
+        var count=0;
         function search() {
+            var arr_search=[];
             arr.filter(function (item) {
                 if (item.city == document.getElementById("search_city").value) {
                     // alert("Name :"+item.FirstName+" city "+item.city);
-                    document.getElementById("citys").innerHTML += "Name :" + item.FirstName + " city :" + item.city + "<br>";
+                    // document.getElementById("citys").innerHTML += "Name :" + item.FirstName + " city :" + item.city + "<br>";
+                    arr_search.push(item);
+                    table1 = `
+                <table border='1' id="tbl">
+                    <tr>
+                    <td>First Name</td>
+                    <td>Last Number</td>
+                    <td>Mobile Number</td>
+                    <td>City</td>
+                    </tr>`;
+                for (let i = 0; i < arr_search.length; i++) {
+                    table1 += `<tr>
+                    <td>${arr_search[i].FirstName}</td>
+                    <td>${arr_search[i].LastName}</td>
+                    <td>${arr_search[i].MobileNumber}</td>
+                    <td>${arr_search[i].city}</td>
+                    </tr>`;
+
                 }
+                table1 += `</table>`;
+                    document.getElementById("createdtbl").innerHTML = table1;
+            }
             })
         }
         function add() {
-            let obj = {
-                FirstName: document.getElementById("fname").value,
-                LastName: document.getElementById("lname").value,
-                MobileNumber: document.getElementById("number").value,
-                city: document.getElementById("city").value
-            }
-            arr.push(obj);
-            console.log(arr)
+            if (document.getElementById("fname").value != "" && document.getElementById("lname").value != "" && document.getElementById("number").value != "" && document.getElementById("city").value != "") {
+               count +=1;
+                let obj = {
+                    id : count,
+                    FirstName: document.getElementById("fname").value,
+                    LastName: document.getElementById("lname").value,
+                    MobileNumber: document.getElementById("number").value,
+                    city: document.getElementById("city").value
+                }
+                arr.push(obj);
+                console.log(arr)
+
+                table1 = `
+                <table border='1' id="tbl">
+                    <tr>
+                    <td>ID</td>
+                    <td>First Name</td>
+                    <td>Last Number</td>
+                    <td>Mobile Number</td>
+                    <td>City</td>
+                    <td colspan="2" align="center">Action</td>
+                    </tr>`;
+                   
+                for (let i = 0; i < arr.length; i++) {
+                 
+                    table1 += `<tr>
+                    <td>${arr[i].id}</td>
+                    <td>${arr[i].FirstName}</td>
+                    <td>${arr[i].LastName}</td>
+                    <td>${arr[i].MobileNumber}</td>
+                    <td>${arr[i].city}</td>
+                    <td><button type='button' onclick="del_record();">Delete</button></td>
+                    <td><button type='button' onclick="up_record();">Update</button></td>
+                    </tr>`;
+                    
+                }
+                    table1 += `</table>`;
+                    document.getElementById("createdtbl").innerHTML = table1;
+                   
+                    resetfiled();
+                }
+                else {
+                    alert('Please Enter data !');
+                }
         }
-        function create_table() {
-            table1 = `
-            <table border='1'><tr>
-                <td>First Name</td>
-                <td>Last Number</td>
-                <td>Mobile Number</td>
-                <td>City</td>
-                </tr>`;
-            for (let i = 0; i < arr.length; i++) {
-                table1 += `<tr>
-                <td>${arr[i].FirstName}</td>
-                <td>${arr[i].LastName}</td>
-                <td>${arr[i].MobileNumber}</td>
-                <td>${arr[i].city}</td>
-                </tr>`;
-            }
-            table1 += `</table>`;
-            document.getElementById("createdtbl").innerHTML += table1;
+        function del_record(){
+            
+             
         }
+        function resetfiled() {
+            document.getElementById("fname").value = "";
+            document.getElementById("lname").value = "";
+            document.getElementById("number").value = "";
+            document.getElementById("city").value = "";
+
+        }
+
+
+
+
     </script>
 
 </body>
